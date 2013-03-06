@@ -16,6 +16,21 @@
 
       <h:form id="reg">
          <h2>Member Registration</h2>
+         
+         <h:outputStylesheet>
+        .pic {
+        margin-right: 2px;
+        }
+    </h:outputStylesheet>
+
+    <rich:toolbar height="26" itemSeparator="grid">
+        <rich:toolbarGroup>
+            <h:commandButton styleClass="pic" image="resources/gfx/save.png" onclick="return false" style="width : 100px; height : 100px;"/>
+            <h:commandButton image="resources/gfx/edit.png" styleClass="pic" onclick="return false" style="width : 100px; height : 100px;"/>
+            <h:commandButton styleClass="pic" image="resources/gfx/delete.png" onclick="return false" style="width : 100px; height : 100px;"/>
+        </rich:toolbarGroup>
+    </rich:toolbar>
+         
          <p>Enforces annotation-based constraints defined on the model class.</p>
          <h:panelGrid columns="3" columnClasses="titleCell">
             <h:outputLabel for="name" value="Name:"/>
