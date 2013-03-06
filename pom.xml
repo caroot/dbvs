@@ -215,6 +215,11 @@
                 <configuration>
                     <!-- Java EE 6 doesn't require web.xml, Maven needs to 
                         catch up! -->
+                         <!-- Configuration for the web.xml !-->
+                    <!--<configuration>
+                      src\main\webapp\WEB-INF\web.xml 
+   				 	  <webXml>${maven.war.webxml}</webXml>        
+  					 <\ configuration> -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>

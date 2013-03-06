@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Member implements Serializable {
+public class Member implements Serializable, Comparable<Member> {
    /** Default value included to remove warning. Remove or modify at will. **/
    private static final long serialVersionUID = 1L;
 
@@ -73,6 +73,14 @@ public class Member implements Serializable {
    }
 
    public void setPhoneNumber(String phoneNumber) {
-      this.phoneNumber = phoneNumber;
-   }
+      this.phoneNumber = phoneNumber;}
+
+
+@Override
+public int compareTo(Member o) {
+	if(this.id>o.id) return 1;
+	if(this.id==o.id) return 0;
+	if(this.id<o.id) return -1;
+	return 0;
+}
 }
