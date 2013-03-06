@@ -1,0 +1,1 @@
+cmd \K "cd C:\Users\danielrhein\git\dbvs"
