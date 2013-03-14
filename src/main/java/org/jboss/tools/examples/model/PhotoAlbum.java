@@ -14,9 +14,15 @@ public class PhotoAlbum {
 	private static final String ERROR_NO_STICKER = "The Sticker can't be null.";
 	private static final String ERROR_NO_PHOTO = "Das Photo can't be null.";
 	private String name = "";
-	private String path = "";
+	private String beschreibung = "";
+	private int anzahl = 0;
+	private int dateigroese =0;
+	private int id;
+	
 	private HashMap<Integer, PhotoAlbumEntry> hashPhotoAlbumEntry;
-
+	
+	
+	
 	/**
 	 * Constructor
 	 */
