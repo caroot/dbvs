@@ -87,10 +87,10 @@ public class CarsBean implements Serializable {
        return result;
    }**/
    
-   public List<String> getAllVendors() {
+   public List<String> getAllAlbumsName() {
        List<String> result = new ArrayList<String>();
-       for (PhotoAlbumList vendorList : getPhotoAlbumLists()) {
-           result.add(vendorList.toString());
+       for (PhotoAlbumList albumsNameList : getPhotoAlbumLists()) {
+           result.add(albumsNameList.toString());
        }
        return result;
    }
@@ -130,28 +130,28 @@ public class CarsBean implements Serializable {
        synchronized (this) {
            if (photoAlbumLists == null) {
                photoAlbumLists = new ArrayList<PhotoAlbumList>();
-               List<PhotoAlbum> inventoryItems = getAllPhotoAlbums();
+               List<PhotoAlbum> photoAlbums = getAllPhotoAlbums();
 
-               Collections.sort(inventoryItems, new Comparator<PhotoAlbum>() {
+               Collections.sort(photoAlbums, new Comparator<PhotoAlbum>() {
                    public int compare(PhotoAlbum o1,  PhotoAlbum o2) {
                        return o1.compareTo(o2);
                    }
                });
-               Iterator<PhotoAlbum> iterator = inventoryItems.iterator();
-               PhotoAlbumList vendorList = new PhotoAlbumList();
-               vendorList.setName(inventoryItems.get(0).getName());
+               Iterator<PhotoAlbum> iterator = photoAlbums.iterator();
+               PhotoAlbumList albumsNameList = new PhotoAlbumList();
+               albumsNameList.setName(photoAlbums.get(0).getName());
                while (iterator.hasNext()) {
                    PhotoAlbum item = iterator.next();
                    PhotoAlbum newItem = new PhotoAlbum();
                    itemToPhotoAlbumItem(item, newItem);
-                   if (!item.getName().equals(vendorList.getName())) {
-                       photoAlbumLists.add(vendorList);
-                       vendorList = new PhotoAlbumList();
-                       vendorList.setName(item.getName());
+                   if (!item.getName().equals(albumsNameList.getName())) {
+                       photoAlbumLists.add(albumsNameList);
+                       albumsNameList = new PhotoAlbumList();
+                       albumsNameList.setName(item.getName());
                    }
-                   vendorList.getPhotoAlbums().add(newItem);
+                   albumsNameList.getPhotoAlbums().add(newItem);
                }
-               photoAlbumLists.add(vendorList);
+               photoAlbumLists.add(albumsNameList);
            }
        }
        return photoAlbumLists;
@@ -316,9 +316,9 @@ public class CarsBean implements Serializable {
 
        try {
            int arrayCount = count;
-           PhotoAlbum[] demoInventoryItemArrays = new PhotoAlbum[arrayCount];
+           PhotoAlbum[] demoPhotoAlbumArrays = new PhotoAlbum[arrayCount];
 
-           for (int j = 0; j < demoInventoryItemArrays.length; j++) {
+           for (int j = 0; j < demoPhotoAlbumArrays.length; j++) {
                PhotoAlbum ii = new PhotoAlbum();
 
                ii.setId(1);
@@ -326,10 +326,10 @@ public class CarsBean implements Serializable {
               // ii.setName(RandomHelper.randomstring());
                ii.setBeschreibung(beschreibung);
                
-               demoInventoryItemArrays[j] = ii;
+               demoPhotoAlbumArrays[j] = ii;
            }
 
-           iiList = new ArrayList<PhotoAlbum>(Arrays.asList(demoInventoryItemArrays));
+           iiList = new ArrayList<PhotoAlbum>(Arrays.asList(demoPhotoAlbumArrays));
        } catch (Exception e) {
            e.printStackTrace();
        }
