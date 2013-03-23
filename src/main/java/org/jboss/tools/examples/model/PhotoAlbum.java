@@ -24,9 +24,7 @@ public class PhotoAlbum {
 	
 	
 	public PhotoAlbum() {
-		this.name = name;
-		this.beschreibung = beschreibung;
-		this.id = id;
+		
 	}
 
 	/**
