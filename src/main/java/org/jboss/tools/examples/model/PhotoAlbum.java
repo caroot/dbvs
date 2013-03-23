@@ -23,9 +23,16 @@ public class PhotoAlbum {
 	
 	
 	
+	public PhotoAlbum() {
+		this.name = name;
+		this.beschreibung = beschreibung;
+		this.id = id;
+	}
+
 	/**
 	 * Constructor
 	 */
+	
 	public PhotoAlbum(String name) throws IllegalArgumentException {
 		hashPhotoAlbumEntry = new HashMap<Integer, PhotoAlbumEntry>();
 		this.name = name;
@@ -68,6 +75,25 @@ public class PhotoAlbum {
      public void setBeschreibung(String beschreibung) throws IllegalArgumentException {
 		this.beschreibung = beschreibung;
 	}
+     
+     /**
+ 	 * Get the id of the photo album
+ 	 * 
+ 	 * @return
+ 	 */
+     public int getId() {
+ 		return id;
+ 	}
+ 	
+ 	/**
+ 	 * Sets the id of the photo album.
+ 	 * 
+ 	 * @param name
+ 	 * @throws IllegalArgumentException
+ 	 */
+     public void setId(int id) throws IllegalArgumentException {
+ 		this.id = id;
+ 	}
 	
 	/**
 	 * Get the number of the photo album
@@ -107,25 +133,6 @@ public class PhotoAlbum {
 		this.dateigroesse = dateigroesse;
 	}
 	
-	/**
-	 * Get the id of the photo album
-	 * 
-	 * @return
-	 */
-    public int getId() {
-		return id;
-	}
-	
-	/**
-	 * Sets the id of the photo album.
-	 * 
-	 * @param name
-	 * @throws IllegalArgumentException
-	 */
-    public void setId(int id) throws IllegalArgumentException {
-		this.id = id;
-	}
-
 	/*
 	 * Get the Entry
 	 * @return entry, null if there's no entry
@@ -177,5 +184,12 @@ public class PhotoAlbum {
 	 */
 	public int getCountEntries() {
 		return hashPhotoAlbumEntry.size();
+	}
+	
+	public int compareTo(PhotoAlbum o) {
+		if(this.id>o.id) return 1;
+		if(this.id==o.id) return 0;
+		if(this.id<o.id) return -1;
+		return 0;
 	}
 }

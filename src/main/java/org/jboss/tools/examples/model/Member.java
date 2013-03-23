@@ -37,12 +37,15 @@ public class Member implements Serializable, Comparable<Member> {
    @NotEmpty
    @Email
    private String email;
+   
+   
 
    @NotNull
    @Size(min = 10, max = 12)
    @Digits(fraction = 0, integer = 12)
    @Column(name = "phone_number")
    private String phoneNumber;
+   
 
    public Long getId() {
       return id;
