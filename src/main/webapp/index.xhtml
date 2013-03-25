@@ -41,7 +41,7 @@
 
          <p>
             <h:panelGrid columns="2">
-               <h:commandButton id="register" action="#{photoAlbumController.register}" value="Register" styleClass="register"/>
+               <h:commandButton id="register" action="#{carsBean.register}" value="Register" styleClass="register"/>
                <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
                            globalOnly="true"/>
             </h:panelGrid>
@@ -88,7 +88,7 @@
     </h:outputStylesheet>
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
     <h:form id="form">
-        <rich:dataTable value="#{carsBean.allPhotoAlbums}" var="car" iterationStatusVar="it" id="table" rows="15">
+        <rich:dataTable value="#{carsBean.allPhotoAlbums}" var="photoAlbum" iterationStatusVar="it" id="table" rows="15">
             <rich:column>
                 <f:facet name="header">#</f:facet>
                 #{it.index}
@@ -115,7 +115,7 @@
                     oncomplete="#{rich:component('editPane')}.show()">
                     <h:graphicImage value="/resources/gfx/edit.png" alt="edit" style="width : 24px; height : 25px;"/>
                     <a4j:param value="#{it.index}" assignTo="#{carsBean.currentPicIndex}" />
-                    <f:setPropertyActionListener target="#{carsBean.editedPic}" value="#{pic}" />
+                    <f:setPropertyActionListener target="#{carsBean.editedPic}" value="#{photoAlbum}" />
                 </a4j:commandLink>
             </rich:column>
             <f:facet name="footer">

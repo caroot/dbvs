@@ -33,11 +33,11 @@ public class PhotoAlbumController{
 
    private PhotoAlbum newPhotoAlbum;
 
-   @Produces
+  /** @Produces
    @Named
    public PhotoAlbum getNewPhotoAlbum() {
       return newPhotoAlbum;
-   }
+   }**/
 
    public void register() throws Exception {
        try {

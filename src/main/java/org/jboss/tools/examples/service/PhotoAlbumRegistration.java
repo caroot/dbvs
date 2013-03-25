@@ -23,6 +23,8 @@ public class PhotoAlbumRegistration {
 
    public void register(PhotoAlbum photoAlbum) throws Exception {
       log.info("Registering " + photoAlbum.getName());
+      log.info("Registering " + photoAlbum.getBeschreibung());
+      log.info("Registering " + photoAlbum.getId());
       em.persist(photoAlbum);
       photoAlbumEventSrc.fire(photoAlbum);
    }

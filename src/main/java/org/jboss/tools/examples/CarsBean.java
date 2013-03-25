@@ -13,8 +13,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Model;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -22,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 //import org.jboss.tools.examples.data.MemberListProducer;
 //import org.jboss.tools.examples.model.Member;
@@ -32,6 +36,7 @@ import org.jboss.tools.examples.service.PhotoAlbumRegistration;
 
 @ManagedBean(name = "carsBean")
 @ViewScoped
+@Model
 public class CarsBean implements Serializable {
    /**
     *
@@ -45,13 +50,16 @@ public class CarsBean implements Serializable {
    private List<PhotoAlbum> allPhotoAlbums = null;
    private List<PhotoAlbumList> photoAlbumLists = null;
  //  private int currentCarIndex;
-   private int currentPicIndex;
+   private int currentPicIndex=1;
  //  private Member editedCar;
    private PhotoAlbum editedPic;
    private int page = 1;
 
    private int clientRows;
    
+   @Inject
+   private Logger log;
+
    @Inject
    private FacesContext facesContext;
 
@@ -294,6 +302,7 @@ public class CarsBean implements Serializable {
                        }
                    } catch (Exception e) {
                        e.printStackTrace();
+                       log.info("Fehler:"+e.getLocalizedMessage());
                    }
                }
            }
@@ -400,6 +409,12 @@ public class CarsBean implements Serializable {
        this.clientRows = clientRows;
    }
    
+   @Produces
+   @Named
+   public PhotoAlbum getNewPhotoAlbum() {
+      return newPhotoAlbum;
+   }
+   
    @PostConstruct
    public void initNewPhotoAlbum() {
       newPhotoAlbum = new PhotoAlbum();
@@ -413,6 +428,7 @@ public class CarsBean implements Serializable {
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
            facesContext.addMessage(null, m);
            initNewPhotoAlbum();
+           createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId());
        } catch (Exception e) {
            String errorMessage = getRootErrorMessage(e);
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
