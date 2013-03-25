@@ -14,16 +14,21 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 //import org.jboss.tools.examples.data.MemberListProducer;
 //import org.jboss.tools.examples.model.Member;
 import org.jboss.tools.examples.model.PhotoAlbumList;
 import org.jboss.tools.examples.model.PhotoAlbum;
 //import org.richfaces.demo.common.data.RandomHelper;
+import org.jboss.tools.examples.service.PhotoAlbumRegistration;
 
 @ManagedBean(name = "carsBean")
 @ViewScoped
@@ -46,6 +51,14 @@ public class CarsBean implements Serializable {
    private int page = 1;
 
    private int clientRows;
+   
+   @Inject
+   private FacesContext facesContext;
+
+   @Inject
+   private PhotoAlbumRegistration photoAlbumRegistration;
+
+   private PhotoAlbum newPhotoAlbum;
 
    public void switchAjaxLoading(ValueChangeEvent event) {
        this.clientRows = (Boolean) event.getNewValue() ? CLIENT_ROWS_IN_AJAX_MODE : 0;
@@ -386,4 +399,47 @@ public class CarsBean implements Serializable {
    public void setClientRows(int clientRows) {
        this.clientRows = clientRows;
    }
+   
+   @PostConstruct
+   public void initNewPhotoAlbum() {
+      newPhotoAlbum = new PhotoAlbum();
+   }
+   
+   
+   
+   public void register (){
+	   try {
+           photoAlbumRegistration.register(newPhotoAlbum);
+           FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
+           facesContext.addMessage(null, m);
+           initNewPhotoAlbum();
+       } catch (Exception e) {
+           String errorMessage = getRootErrorMessage(e);
+           FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
+           facesContext.addMessage(null, m);
+       }
+   }
+
+   
+   private String getRootErrorMessage(Exception e) {
+       // Default to general error message that registration failed.
+       String errorMessage = "Registration failed. See server log for more information";
+       if (e == null) {
+           // This shouldn't happen, but return the default messages
+           return errorMessage;
+       }
+
+       // Start with the exception and recurse to find the root cause
+       Throwable t = e;
+       while (t != null) {
+           // Get the message from the Throwable class instance
+           errorMessage = t.getLocalizedMessage();
+           t = t.getCause();
+       }
+       // This is the root cause message
+       return errorMessage;
+   }  
+
 }
+
+
