@@ -311,20 +311,22 @@ public class CarsBean implements Serializable {
        return iiList;
    }**/
    
-   public List<PhotoAlbum> createPic(String name, String beschreibung,int count) {
+   public List<PhotoAlbum> createPic(String name, String beschreibung, int id) {
        ArrayList<PhotoAlbum> iiList = null;
 
        try {
+    	   int count = 0;
            int arrayCount = count;
            PhotoAlbum[] demoPhotoAlbumArrays = new PhotoAlbum[arrayCount];
 
            for (int j = 0; j < demoPhotoAlbumArrays.length; j++) {
                PhotoAlbum ii = new PhotoAlbum();
 
-               ii.setId(1);
+               
                ii.setName(name);
               // ii.setName(RandomHelper.randomstring());
                ii.setBeschreibung(beschreibung);
+               ii.setId(id);
                
                demoPhotoAlbumArrays[j] = ii;
            }

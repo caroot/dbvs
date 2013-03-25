@@ -94,16 +94,16 @@
                 #{it.index}
             </rich:column>
             <rich:column>
-                <f:facet name="header">ID</f:facet>
-                <h:outputText value="#{photoAlbum.id}" />
-            </rich:column>
-            <rich:column>
                 <f:facet name="header">Name</f:facet>
                 <h:outputText value="#{photoAlbum.name}" />
             </rich:column>
             <rich:column>
                 <f:facet name="header">Beschreibung</f:facet>
                 <h:outputText value="#{photoAlbum.beschreibung}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Id</f:facet>
+                <h:outputText value="#{photoAlbum.id}" />
             </rich:column>
             <rich:column>
                 <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
