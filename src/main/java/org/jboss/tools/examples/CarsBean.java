@@ -164,9 +164,9 @@ public class CarsBean implements Serializable {
    }**/
    
    private void itemToPhotoAlbumItem(PhotoAlbum item, PhotoAlbum newItem) {
-	   newItem.setId(item.getId());
 	   newItem.setName(item.getName());
 	   newItem.setBeschreibung(item.getBeschreibung());
+	   newItem.setId(item.getId());
 	   //newItem.setId(item.getId());
 	  // newItem.setName(item.getName());
    }
@@ -324,7 +324,6 @@ public class CarsBean implements Serializable {
 
                
                ii.setName(name);
-              // ii.setName(RandomHelper.randomstring());
                ii.setBeschreibung(beschreibung);
                ii.setId(id);
                
