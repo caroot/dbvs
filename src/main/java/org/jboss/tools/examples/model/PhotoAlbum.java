@@ -1,6 +1,19 @@
 package org.jboss.tools.examples.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * This class represents a PhotoAlbum
@@ -9,14 +22,32 @@ import java.util.HashMap;
  * 
  */
 // TODO: Photoalbum testen; Name des Photoalbums festlegen.
-public class PhotoAlbum {
+@Entity
+@XmlRootElement
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+public class PhotoAlbum implements Serializable, Comparable<PhotoAlbum> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String ERROR_NO_STICKER = "The Sticker can't be null.";
 	private static final String ERROR_NO_PHOTO = "Das Photo can't be null.";
+	
+	
+	@NotNull
+	@NotEmpty
 	private String name = "";
+	
+	@NotNull
+	@NotEmpty
 	private String beschreibung = "";
+	
 	private int anzahl = 0;
+	
 	private int dateigroesse =0;
+	
+	@Id
 	private int id;
 	
 	private HashMap<Integer, PhotoAlbumEntry> hashPhotoAlbumEntry;
