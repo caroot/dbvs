@@ -83,7 +83,9 @@ public class CarsBean implements Serializable {
 
    public void remove() {
        //allInventoryItems.remove(allInventoryItems.get(currentCarIndex)
-    		   allPhotoAlbums.remove(allPhotoAlbums.get(currentPicIndex));
+       log.info("Loesche Photoalbum mit der ID:"+ currentPicIndex);
+       allPhotoAlbums.remove(currentPicIndex);
+	   showInfos(allPhotoAlbums);
    }
 
    public void store() {
@@ -152,41 +154,41 @@ public class CarsBean implements Serializable {
                    try {
                        switch (k) {
                            case 0:
-                               allPhotoAlbums.addAll(createPic("Chevrolet", "Corvette", 5));
+                               allPhotoAlbums.add(createPic("Chevrolet", "Corvette", 5));
                                //allInventoryItems.addAll(createPic("Che","Cha", 4));
-                               allPhotoAlbums.addAll(createPic("Chevrolet", "Malibu", 8));
-                               allPhotoAlbums.addAll(createPic("Chevrolet", "Tahoe", 6));
+                               allPhotoAlbums.add(createPic("Chevrolet", "Malibu", 8));
+                               allPhotoAlbums.add(createPic("Chevrolet", "Tahoe", 6));
 
                                break;
 
                            case 1:
-                               allPhotoAlbums.addAll(createPic("Ford", "Taurus", 12));
-                               allPhotoAlbums.addAll(createPic("Ford", "Explorer", 11));
+                               allPhotoAlbums.add(createPic("Ford", "Taurus", 12));
+                               allPhotoAlbums.add(createPic("Ford", "Explorer", 11));
 
                                break;
 
                            case 2:
-                               allPhotoAlbums.addAll(createPic("Nissan", "Maxima", 9));
-                               allPhotoAlbums.addAll(createPic("Nissan", "Frontier", 6));
+                               allPhotoAlbums.add(createPic("Nissan", "Maxima", 9));
+                               allPhotoAlbums.add(createPic("Nissan", "Frontier", 6));
 
                                break;
 
                            case 3:
-                               allPhotoAlbums.addAll(createPic("Toyota", "4-Runner", 7));
-                               allPhotoAlbums.addAll(createPic("Toyota", "Camry", 15));
-                               allPhotoAlbums.addAll(createPic("Toyota", "Avalon", 13));
+                               allPhotoAlbums.add(createPic("Toyota", "4-Runner", 7));
+                               allPhotoAlbums.add(createPic("Toyota", "Camry", 15));
+                               allPhotoAlbums.add(createPic("Toyota", "Avalon", 13));
 
                                break;
 
                            case 4:
-                               allPhotoAlbums.addAll(createPic("GMC", "Sierra", 8));
-                               allPhotoAlbums.addAll(createPic("GMC", "Yukon", 10));
+                               allPhotoAlbums.add(createPic("GMC", "Sierra", 8));
+                               allPhotoAlbums.add(createPic("GMC", "Yukon", 10));
 
                                break;
 
                            case 5:
-                               allPhotoAlbums.addAll(createPic("Infiniti", "G35", 6));
-                               allPhotoAlbums.addAll(createPic("Infiniti", "EX35", 5));
+                               allPhotoAlbums.add(createPic("Infiniti", "G35", 6));
+                               allPhotoAlbums.add(createPic("Infiniti", "EX35", 5));
 
                                break;
 
@@ -198,21 +200,29 @@ public class CarsBean implements Serializable {
                        log.info("Fehler:"+e.getLocalizedMessage());
                    }
                }
+               
            }
        }
-       
+       //showInfos(allPhotoAlbums);
        return allPhotoAlbums;
    }
      
-   public List<PhotoAlbum> createPic(String name, String beschreibung, int id) {
-       ArrayList<PhotoAlbum> iiList = null;
+   private void showInfos(List<PhotoAlbum> list)
+   {
+	   for (PhotoAlbum pa : list)
+	   {
+		   log.info("Name:" + pa.getName() + " Beschreibung:" + pa.getBeschreibung() + " ID:" + pa.getAnzahl());
+	   }
+   }
+   public PhotoAlbum createPic(String name, String beschreibung, int id) {
+       //ArrayList<PhotoAlbum> iiList = null;
 
-       try {
-    	   int count = 0;
-           int arrayCount = count;
-           PhotoAlbum[] demoPhotoAlbumArrays = new PhotoAlbum[arrayCount];
+      // try {
+    	//   int count = 0;
+          // int arrayCount = count;
+          // PhotoAlbum[] demoPhotoAlbumArrays = new PhotoAlbum[arrayCount];
 
-           for (int j = 0; j < demoPhotoAlbumArrays.length; j++) {
+           //for (int j = 0; j < demoPhotoAlbumArrays.length; j++) {
                PhotoAlbum ii = new PhotoAlbum();
 
                
@@ -220,15 +230,15 @@ public class CarsBean implements Serializable {
                ii.setBeschreibung(beschreibung);
                ii.setId(id);
                
-               demoPhotoAlbumArrays[j] = ii;
-           }
+            //   demoPhotoAlbumArrays[j] = ii;
+           //}
 
-           iiList = new ArrayList<PhotoAlbum>(Arrays.asList(demoPhotoAlbumArrays));
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+           //iiList = new ArrayList<PhotoAlbum>(Arrays.asList(demoPhotoAlbumArrays));
+       //} catch (Exception e) {
+         //  e.printStackTrace();
+       //}
 
-       return iiList;
+       return ii;
    }
 
      
@@ -285,8 +295,10 @@ public class CarsBean implements Serializable {
 		      //log.info("Registering " + newPhotoAlbum.getId());
 		      //em.persist(newPhotoAlbum);
 		      //photoAlbumEventSrc.fire(newPhotoAlbum);
+		   allPhotoAlbums.add(createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId())); 
            photoAlbumRegistration.register(newPhotoAlbum);
-           createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId());
+           showInfos(allPhotoAlbums);
+           photoAlbumEventSrc.fire(newPhotoAlbum);
            initNewPhotoAlbum();
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
            facesContext.addMessage(null, m);
