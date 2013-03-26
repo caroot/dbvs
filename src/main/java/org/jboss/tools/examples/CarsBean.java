@@ -38,7 +38,7 @@ import org.jboss.tools.examples.service.PhotoAlbumRegistration;
 
 @ManagedBean(name = "carsBean")
 @ViewScoped
-@Model
+
 public class CarsBean implements Serializable {
    /**
     *
@@ -82,10 +82,11 @@ public class CarsBean implements Serializable {
    }
 
    public void remove() {
-       //allInventoryItems.remove(allInventoryItems.get(currentCarIndex)
+	   synchronized (this) {//allInventoryItems.remove(allInventoryItems.get(currentCarIndex)
        log.info("Loesche Photoalbum mit der ID:"+ currentPicIndex);
        allPhotoAlbums.remove(currentPicIndex);
-	   showInfos(allPhotoAlbums);
+       showInfos(allPhotoAlbums);
+	   }
    }
 
    public void store() {
@@ -150,7 +151,7 @@ public class CarsBean implements Serializable {
            if (allPhotoAlbums == null) {
                allPhotoAlbums = new ArrayList<PhotoAlbum>();
 
-               for (int k = 0; k <= 5; k++) {
+              /* for (int k = 0; k <= 5; k++) {
                    try {
                        switch (k) {
                            case 0:
@@ -199,7 +200,7 @@ public class CarsBean implements Serializable {
                        e.printStackTrace();
                        log.info("Fehler:"+e.getLocalizedMessage());
                    }
-               }
+               }*/
                
            }
        }
@@ -278,12 +279,12 @@ public class CarsBean implements Serializable {
    @Produces
    @Named
    public PhotoAlbum getNewPhotoAlbum() {
-      return newPhotoAlbum;
+      return editedPic;
    }
    
    @PostConstruct
    public void initNewPhotoAlbum() {
-      newPhotoAlbum = new PhotoAlbum();
+	   editedPic = new PhotoAlbum();
    }
    
    
@@ -295,10 +296,10 @@ public class CarsBean implements Serializable {
 		      //log.info("Registering " + newPhotoAlbum.getId());
 		      //em.persist(newPhotoAlbum);
 		      //photoAlbumEventSrc.fire(newPhotoAlbum);
-		   allPhotoAlbums.add(createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId())); 
-           photoAlbumRegistration.register(newPhotoAlbum);
+		   allPhotoAlbums.add(createPic(editedPic.getName(), editedPic.getBeschreibung(), editedPic.getId())); 
+           photoAlbumRegistration.register(editedPic);
            showInfos(allPhotoAlbums);
-           photoAlbumEventSrc.fire(newPhotoAlbum);
+           photoAlbumEventSrc.fire(editedPic);
            initNewPhotoAlbum();
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
            facesContext.addMessage(null, m);
