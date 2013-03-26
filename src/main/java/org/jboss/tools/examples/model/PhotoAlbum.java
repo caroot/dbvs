@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.ws.rs.DefaultValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Email;
@@ -36,18 +38,22 @@ public class PhotoAlbum implements Serializable, Comparable<PhotoAlbum> {
 	
 	
 	@NotNull
+	@Size(min = 2, max = 255)
 	@NotEmpty
-	private String name = "";
+	private String name;
 	
 	@NotNull
+	@Size(min = 2, max = 255)
 	@NotEmpty
-	private String beschreibung = "";
+	private String beschreibung;
 	
-	private int anzahl = 0;
-	
+	@DefaultValue(value="0")
+	private int anzahl;
+	@DefaultValue(value="0")
 	private int dateigroesse =0;
 	
 	@Id
+	@GeneratedValue
 	private int id;
 	
 	private HashMap<Integer, PhotoAlbumEntry> hashPhotoAlbumEntry;

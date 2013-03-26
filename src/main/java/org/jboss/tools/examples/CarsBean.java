@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Event;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -26,6 +27,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 
 //import org.jboss.tools.examples.data.MemberListProducer;
 //import org.jboss.tools.examples.model.Member;
@@ -66,6 +68,13 @@ public class CarsBean implements Serializable {
    @Inject
    private PhotoAlbumRegistration photoAlbumRegistration;
 
+   @Inject
+   private Event<PhotoAlbum> photoAlbumEventSrc;
+
+   
+   @Inject
+   private EntityManager em;
+   
    private PhotoAlbum newPhotoAlbum;
 
    public void switchAjaxLoading(ValueChangeEvent event) {
@@ -424,11 +433,16 @@ public class CarsBean implements Serializable {
    
    public void register (){
 	   try {
-           photoAlbumRegistration.register(newPhotoAlbum);
+		   log.info("Registering " + newPhotoAlbum.getName());
+		      log.info("Registering " + newPhotoAlbum.getBeschreibung());
+		      log.info("Registering " + newPhotoAlbum.getId());
+		      em.persist(newPhotoAlbum);
+		      photoAlbumEventSrc.fire(newPhotoAlbum);
+           //photoAlbumRegistration.register(newPhotoAlbum);
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
            facesContext.addMessage(null, m);
-           initNewPhotoAlbum();
            createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId());
+           initNewPhotoAlbum();
        } catch (Exception e) {
            String errorMessage = getRootErrorMessage(e);
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
