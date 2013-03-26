@@ -46,7 +46,22 @@
                            globalOnly="true"/>
             </h:panelGrid>
          </p>
-
+      </h:form>
+      <h2>Members</h2>
+      <h:panelGroup rendered="#{empty members}">
+         <em>No registered members.</em>
+      </h:panelGroup>
+      <h:outputStylesheet>
+        a.no-decor>img {
+        border: none;
+        }
+    </h:outputStylesheet>
+      
+      <h:outputStylesheet>
+        a.no-decor>img {
+        border: none;
+        }
+    </h:outputStylesheet>
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
     <h:form id="form">
         <rich:dataTable value="#{carsBean.allPhotoAlbums}" var="photoAlbum" iterationStatusVar="it" id="table" rows="15">
