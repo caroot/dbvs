@@ -91,31 +91,7 @@ public class CarsBean implements Serializable {
        allPhotoAlbums.set(currentPicIndex, editedPic);
    }
 
-  /** public List<SelectItem> getVendorOptions() {
-       List<SelectItem> result = new ArrayList<SelectItem>();
-       result.add(new SelectItem("", ""));
-       for (MemberListProducer vendorList : getInventoryVendorLists()) {
-           result.add(new SelectItem(vendorList.getMembers().get(0)));
-       }
-       return result;
-   }**/
-   
-  /** public List<SelectItem> getVendorOptions() {
-       List<SelectItem> result = new ArrayList<SelectItem>();
-       result.add(new SelectItem("", ""));
-       for (PhotoAlbumList vendorList : getPhotoAlbumLists()) {
-           result.add(new SelectItem(vendorList.getPhotoAlbums().get(0)));
-       }
-       return result;
-   }**/
 
-  /** public List<String> getAllVendors() {
-       List<String> result = new ArrayList<String>();
-       for (MemberListProducer vendorList : getInventoryVendorLists()) {
-           result.add(vendorList.toString());
-       }
-       return result;
-   }**/
    
    public List<String> getAllAlbumsName() {
        List<String> result = new ArrayList<String>();
@@ -125,37 +101,7 @@ public class CarsBean implements Serializable {
        return result;
    }
 
-   /**public List<MemberListProducer> getInventoryVendorLists() {
-       synchronized (this) {
-           if (inventoryVendorLists == null) {
-               inventoryVendorLists = new ArrayList<MemberListProducer>();
-               List<Member> inventoryItems = getAllInventoryItems();
-
-               Collections.sort(inventoryItems, new Comparator<Member>() {
-                   public int compare(Member o1,  Member o2) {
-                       return o1.compareTo(o2);
-                   }
-               });
-               Iterator<Member> iterator = inventoryItems.iterator();
-               MemberListProducer vendorList = new MemberListProducer();
-               vendorList.onMemberListChanged(inventoryItems.get(0));
-               while (iterator.hasNext()) {
-                   Member item = iterator.next();
-                   Member newItem = new Member();
-                   itemToVendorItem(item, newItem);
-                   if (!item.equals(vendorList.getMembers())) {
-                       inventoryVendorLists.add(vendorList);
-                       vendorList = new MemberListProducer();
-                       vendorList.onMemberListChanged(item);
-                   }
-                   vendorList.onMemberListChanged(newItem);
-               }
-               inventoryVendorLists.add(vendorList);
-           }
-       }
-       return inventoryVendorLists;
-   }**/
-   
+     
    public List<PhotoAlbumList> getPhotoAlbumLists() {
        synchronized (this) {
            if (photoAlbumLists == null) {
@@ -187,11 +133,6 @@ public class CarsBean implements Serializable {
        return photoAlbumLists;
    }
 
-   /**private void itemToVendorItem(Member item, Member newItem) {
-	   newItem.setEmail(item.getEmail());
-	   newItem.setId(item.getId());
-	   newItem.setPhoneNumber(item.getPhoneNumber());
-   }**/
    
    private void itemToPhotoAlbumItem(PhotoAlbum item, PhotoAlbum newItem) {
 	   newItem.setName(item.getName());
@@ -201,64 +142,7 @@ public class CarsBean implements Serializable {
 	  // newItem.setName(item.getName());
    }
 
-   /**public List<Member> getAllInventoryItems() {
-       synchronized (this) {
-           if (allInventoryItems == null) {
-               allInventoryItems = new ArrayList<Member>();
-
-               for (int k = 0; k <= 5; k++) {
-                   try {
-                       switch (k) {
-                           case 0:
-                               allInventoryItems.addAll(createCar("Chevrolet", "Corvette", 5));
-                               allInventoryItems.addAll(createCar("Chevrolet", "Malibu", 8));
-                               allInventoryItems.addAll(createCar("Chevrolet", "Tahoe", 6));
-
-                               break;
-
-                           case 1:
-                               allInventoryItems.addAll(createCar("Ford", "Taurus", 12));
-                               allInventoryItems.addAll(createCar("Ford", "Explorer", 11));
-
-                               break;
-
-                           case 2:
-                               allInventoryItems.addAll(createCar("Nissan", "Maxima", 9));
-                               allInventoryItems.addAll(createCar("Nissan", "Frontier", 6));
-
-                               break;
-
-                           case 3:
-                               allInventoryItems.addAll(createCar("Toyota", "4-Runner", 7));
-                               allInventoryItems.addAll(createCar("Toyota", "Camry", 15));
-                               allInventoryItems.addAll(createCar("Toyota", "Avalon", 13));
-
-                               break;
-
-                           case 4:
-                               allInventoryItems.addAll(createCar("GMC", "Sierra", 8));
-                               allInventoryItems.addAll(createCar("GMC", "Yukon", 10));
-
-                               break;
-
-                           case 5:
-                               allInventoryItems.addAll(createCar("Infiniti", "G35", 6));
-                               allInventoryItems.addAll(createCar("Infiniti", "EX35", 5));
-
-                               break;
-
-                           default:
-                               break;
-                       }
-                   } catch (Exception e) {
-                       e.printStackTrace();
-                   }
-               }
-           }
-       }
-       return allInventoryItems;
-   }**/
-
+  
    public List<PhotoAlbum> getAllPhotoAlbums() {
        synchronized (this) {
            if (allPhotoAlbums == null) {
@@ -316,32 +200,10 @@ public class CarsBean implements Serializable {
                }
            }
        }
+       
        return allPhotoAlbums;
    }
-  /** public List<Member> createCar(String vendor, String model, int count) {
-       ArrayList<Member> iiList = null;
-
-       try {
-           int arrayCount = count;
-           Member[] demoInventoryItemArrays = new Member[arrayCount];
-
-           for (int j = 0; j < demoInventoryItemArrays.length; j++) {
-               Member ii = new Member();
-
-               ii.setId(1L);
-               ii.setName("1");
-               ii.setEmail("2");
-               demoInventoryItemArrays[j] = ii;
-           }
-
-           iiList = new ArrayList<Member>(Arrays.asList(demoInventoryItemArrays));
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
-       return iiList;
-   }**/
-   
+     
    public List<PhotoAlbum> createPic(String name, String beschreibung, int id) {
        ArrayList<PhotoAlbum> iiList = null;
 
@@ -369,22 +231,7 @@ public class CarsBean implements Serializable {
        return iiList;
    }
 
-  /** public int getCurrentCarIndex() {
-       return currentCarIndex;
-   }
-
-   public void setCurrentCarIndex(int currentCarIndex) {
-       this.currentCarIndex = currentCarIndex;
-   }
-
-   public Member getEditedCar() {
-       return editedCar;
-   }
-
-   public void setEditedCar(Member editedCar) {
-       this.editedCar = editedCar;
-   }**/
-   
+     
    public int getCurrentPicIndex() {
        return currentPicIndex;
    }
@@ -433,16 +280,16 @@ public class CarsBean implements Serializable {
    
    public void register (){
 	   try {
-		   log.info("Registering " + newPhotoAlbum.getName());
-		      log.info("Registering " + newPhotoAlbum.getBeschreibung());
-		      log.info("Registering " + newPhotoAlbum.getId());
-		      em.persist(newPhotoAlbum);
-		      photoAlbumEventSrc.fire(newPhotoAlbum);
-           //photoAlbumRegistration.register(newPhotoAlbum);
-           FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
-           facesContext.addMessage(null, m);
+		   //log.info("Registering " + newPhotoAlbum.getName());
+		     // log.info("Registering " + newPhotoAlbum.getBeschreibung());
+		      //log.info("Registering " + newPhotoAlbum.getId());
+		      //em.persist(newPhotoAlbum);
+		      //photoAlbumEventSrc.fire(newPhotoAlbum);
+           photoAlbumRegistration.register(newPhotoAlbum);
            createPic(newPhotoAlbum.getName(), newPhotoAlbum.getBeschreibung(), newPhotoAlbum.getId());
            initNewPhotoAlbum();
+           FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
+           facesContext.addMessage(null, m);
        } catch (Exception e) {
            String errorMessage = getRootErrorMessage(e);
            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");

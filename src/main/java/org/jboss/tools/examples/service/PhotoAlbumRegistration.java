@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import java.util.logging.Logger;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
@@ -17,7 +19,8 @@ public class PhotoAlbumRegistration {
 
    @Inject
    private EntityManager em;
-
+   
+   
    @Inject
    private Event<PhotoAlbum> photoAlbumEventSrc;
 
@@ -25,7 +28,8 @@ public class PhotoAlbumRegistration {
       log.info("Registering " + photoAlbum.getName());
       log.info("Registering " + photoAlbum.getBeschreibung());
       log.info("Registering " + photoAlbum.getId());
-      em.persist(photoAlbum);
-      photoAlbumEventSrc.fire(photoAlbum);
+      em.detach(photoAlbum);
+      // em.persist(photoAlbum);
+      //photoAlbumEventSrc.fire(photoAlbum);
    }
 }
